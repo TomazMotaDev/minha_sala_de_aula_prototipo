@@ -47,8 +47,6 @@ public class FormCadAula extends Formularios {
         
         System.out.println("(6/6) Link para a aula - opcional:");
         formAula.setLink(entrada.nextLine());
-        
-        System.out.println("\n  +++Aula Cadastrada com sucesso+++\n");
     }
 
 }

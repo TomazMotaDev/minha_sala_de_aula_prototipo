@@ -43,6 +43,7 @@ public class PacoteDeAula implements ExibirDados{
     //METÓDO HERDADO PARA EXIBIR DADOS DO PACOTE DE AULA
     @Override
     public void exibirResumo() {
+        System.out.println("  Nome: "+infoPacote.getNome());
         System.out.println("  Materia: "+this.getInfoPacote().getMateria()+" || Tipo: "+this.getInfoPacote().getTipo());
         System.out.println("  Perfil: "+this.getInfoPacote().getPerfil()+ " || Duração da Aula: "+this.getInfoPacote().getDuracaoAula()+"/aula");
         System.out.println("  Duração do Pacote: "+this.getRecorreciaSemanal()+"x Semana || Duração do Pacote: "+this.getDuracaoPacote()+" mes(es)");

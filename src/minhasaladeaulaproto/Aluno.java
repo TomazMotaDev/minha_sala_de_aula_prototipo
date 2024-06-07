@@ -40,6 +40,7 @@ public class Aluno implements ExibirDados{
         }else{
             System.out.println("  Observação: ---Sem Observação---"); 
         }
+        System.out.println("----------------------------------------------------");
         
     }
 }

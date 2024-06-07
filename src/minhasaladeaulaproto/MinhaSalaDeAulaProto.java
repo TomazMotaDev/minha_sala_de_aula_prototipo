@@ -11,19 +11,22 @@ public class MinhaSalaDeAulaProto {
     static List<Turma> turmas = new ArrayList();
 
     public static void main(String[] args) {
-        //VARIAVEIS
+        //VARIAVEIS LOCAIS
         String nome;
         byte opcao, opCadastro, opTurma, opPacote, opResumo;
         
-        //Cadastrar Professor - Será o primeiro passo e somente um professor cadastrado. 
-        //O professor será usado em outros objetos, por isso será feito primeiro.
-        /*
+        /*Cadastrar Professor - Será o primeiro passo e somente um professor cadastrado. 
+        O professor será usado em outros objetos, por isso será feito primeiro.*/
+        
+        //CABEÇALHO
         System.out.println("==========================");
         System.out.println("|   MINHA SALA DE AULA   |");
         System.out.println("==========================\n");
+        //INFORMATIVO SOBRE A APLICAÇÃO E A PRIMEIRA AÇÃO QUE DEVE SER FEITA
         System.out.println("Seja bem vindo, bem vinda e bem vinde a sua Sala de Aula");
         System.out.println("Como primeira ação, vamos cadastrar suas informações como professor(a/e)");
         
+        //UM FORMULÁRIO PARA CADA ATRIBUTO DO PROFESSOR
         System.out.println("(1/5) Insira seu nome:");
         nome = entrada.nextLine();
         Professor professor = new Professor(nome);
@@ -43,7 +46,7 @@ public class MinhaSalaDeAulaProto {
         professor.setEmail(entrada.nextLine());
         
         System.out.println("\n*** Cadastro feito com sucesso ***\n");
-        */
+        
         //Menu principal - Cadastrar | Resumos | Calendario | Financeiro
         
         do{
@@ -52,7 +55,7 @@ public class MinhaSalaDeAulaProto {
             menuPrincipal.addItemMenu("CADASTRAR");
             menuPrincipal.addItemMenu("RESUMOS");
             menuPrincipal.addItemMenu("CALENDARIO"); //O Calendario ficará para um outro momento, infelizmente. Preciso estudar melhor como apresentar-lo.
-            menuPrincipal.addItemMenu("FINANCEIRO");
+            menuPrincipal.addItemMenu("FINANCEIRO"); //O Financeiro também. rsrsrs
             menuPrincipal.addItemMenu("SAIR");
             menuPrincipal.mostrarMenu();
             opcao = entrada.nextByte();
@@ -170,7 +173,7 @@ public class MinhaSalaDeAulaProto {
                                     Aula aulaNova = new Aula();
                                     
                                     //FORMULÁRIO PARA CRIAR A AULA
-                                    FormCadAula formAula = new FormCadAula("CADASTRO NOVA TURMA");
+                                    FormCadAula formAula = new FormCadAula("CADASTRO NOVA AULA");
                                     formAula.cabecalho();
                                     formAula.formulario();
                                     aulaNova = formAula.getFormAula();
@@ -194,7 +197,7 @@ public class MinhaSalaDeAulaProto {
                                     PlanejamentoDeAula planejamentoNovo = new PlanejamentoDeAula();
                                     
                                     //FORMULÁRIO PARA CRIAR A AULA
-                                    FormCadPlanejamento formPlanejamento = new FormCadPlanejamento("CADASTRO NOVA TURMA");
+                                    FormCadPlanejamento formPlanejamento = new FormCadPlanejamento("CADASTRO NOVO PLANEJAMENTO DE AULA");
                                     formPlanejamento.cabecalho();
                                     formPlanejamento.formulario();
                                     
@@ -242,18 +245,18 @@ public class MinhaSalaDeAulaProto {
                             switch (opResumo){
                                 //1 - Pacotes de Aula
                                 case 1:
+                                    System.out.println("    V-V-V-PACOTES CADASTRADOS-V-V-V");
                                     for (PacoteDeAula pacote: pacotes){
                                         pacote.exibirResumo();
                                     }
-                                    System.out.println("\n  ---Estes são os Pacotes de Aula Cadastrados---\n");
                                 break;
 
                                 //2 - Turmas
                                 case 2:
+                                    System.out.println("    V-V-V-TURMAS CADASTRADAS-V-V-V");
                                     for (Turma turma: turmas){
                                         turma.exibirResumo();
                                     }
-                                    System.out.println("\n  ---Essas são as Turmas Cadastrados---\n");
                                 break;
 
                                 //3 - Endereço de uma Turma
@@ -262,6 +265,7 @@ public class MinhaSalaDeAulaProto {
                                     if(turmas.get(opTurma-1).getEndereco() == null){
                                         System.out.println("   ***Não há endereço cadastrado para esta Turma***");
                                     }else{
+                                        System.out.println("    V-V-V-ENDEREÇO CADASTRADO-V-V-V");
                                         turmas.get(opTurma-1).getEndereco().exibirResumo();
                                     }
 
@@ -283,11 +287,11 @@ public class MinhaSalaDeAulaProto {
 
                                 //5 - Buscar dados de um aluno específicamente
                                 case 5:
+                                    
                                     opTurma = escolherTurma();
                                     if(turmas.get(opTurma-1).getAlunos().isEmpty()){
                                         System.out.println("   ***Não há estudantes cadastradas nesta Turma***");
-                                    }else{                                        
-                                        opTurma = escolherTurma();
+                                    }else{
                                         byte opAluno = escolherAluno(opTurma);
                                         System.out.println("\n  VVV DADOS DO ESTUDANTE VVV");
                                         turmas.get(opTurma-1).getAlunos().get(opAluno-1).exibirResumo();
@@ -366,12 +370,13 @@ public class MinhaSalaDeAulaProto {
         }while(opcao != 5); 
           
     }
-   
+    
+    //METODOS PARA A ESCOLHA DE PACOTES, TURMAS, AULAS E ALUNOS QUE RETORNAM UM NÚMERO
     public static byte escolherTurma() {
         byte opTurma;
         Menu menuTurmas = new Menu("ESCOLHA DA TURMA");
 
-        //APRESENTANDO AS TURMAS E CRIANDO O MENU
+        //ADICIONANDO OS NOMES DAS TURMAS NO MENU
         for (Turma turma: turmas){
             menuTurmas.addItemMenu(turma.getInfoTurma().getNome());
         }
@@ -390,12 +395,10 @@ public class MinhaSalaDeAulaProto {
     
     public static byte escolherPacote(){
         byte opPacote;
-        //ESCOLHA DO PACOTE PARA A TURMA - OBRIGATORIO
         Menu menuPacoteTurma = new Menu("ESCOLHA DO PACOTE");
 
-        //APRESENTANDO OS PACOTES CADASTRADOS
+        //ADICIONANDO OS NOMES DOS PACOTES NO MENU
         for (PacoteDeAula pacote: pacotes){
-            //ADICIONANDO OS NOMES DOS PACOTES NO MENU
             menuPacoteTurma.addItemMenu(pacote.getInfoPacote().getNome());
         }
         //APRESENTA O MENU E SUAS OPÇÕES
@@ -412,6 +415,8 @@ public class MinhaSalaDeAulaProto {
     
     public static byte escolherAluno(byte opTurma){
         Menu menuAlunos = new Menu("ESCOLHA O ESTUDANTE");
+        
+        //ADICIONANDO OS NOMES DOS PACOTES NO MENU
         for (Aluno aluno: turmas.get(opTurma-1).getAlunos()){
             menuAlunos.addItemMenu(aluno.getNome());
         }
@@ -432,6 +437,8 @@ public class MinhaSalaDeAulaProto {
     public static byte escolherAula(byte opTurma){
         //ESCOLHENDO A AULA EM QUE O PLANEJAMENTO SERÁ VINCULADO
         Menu menuAulas = new Menu("ESCOLHA DA AULA");
+        
+        //ADICIONANDO OS NOMES DAS AULAS NO MENU
         for (Aula aula: turmas.get(opTurma-1).getAulas()){
             menuAulas.addItemMenu(aula.getNome());
         }
