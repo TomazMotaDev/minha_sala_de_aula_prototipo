@@ -1,5 +1,9 @@
 package minhasaladeaulaproto;
 
+import turma.*;
+import professor.*;
+import formularios.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
