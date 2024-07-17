@@ -8,6 +8,7 @@ public class Pagamento {
     private Calendar dataPagamento;
     private String formaPagamento;
     private String situacaoPagamento;
+    private int id;
 
     //GETTERS AND SETTERS
     public double getValor() {
@@ -41,6 +42,12 @@ public class Pagamento {
     public void setSituacaoPagamento(String situacaoPagamento) {
         this.situacaoPagamento = situacaoPagamento;
     }
-    
-    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

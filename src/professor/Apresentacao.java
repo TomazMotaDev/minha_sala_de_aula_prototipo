@@ -8,6 +8,7 @@ public class Apresentacao implements ExibirDados{
     private String bio;
     private String metodologia;
     private BufferedImage logotipo;
+    private int id;
     
     //GETTERS AND SETTERS
     public String getBio() {
@@ -32,6 +33,14 @@ public class Apresentacao implements ExibirDados{
 
     public void setLogotipo(BufferedImage logotipo) {
         this.logotipo = logotipo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     //METÓDO HERDADO PARA EXIBIR DADOS DA APRESENTAÇÃO DO PROFESSOR

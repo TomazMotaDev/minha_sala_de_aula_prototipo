@@ -10,6 +10,7 @@ public class Turma implements ExibirDados{
     private InfoTurma infoTurma;
     private Endereco endereco;
     private PacoteDeAula pacoteDeAula;
+    private int id;
     private List<Pagamento> pagamento = new ArrayList();
     private List<Aluno> alunos = new ArrayList();
     private List<Aula> aulas = new ArrayList();
@@ -39,6 +40,14 @@ public class Turma implements ExibirDados{
         this.pacoteDeAula = pacoteDeAula;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public List<Pagamento> getPagamento() {
         return pagamento;
     }
@@ -84,5 +93,13 @@ public class Turma implements ExibirDados{
         }
         System.out.println("\n  Data Prevista de Pagamento no Mês: "+infoTurma.getDataPrevistaPag());
         System.out.println("-------------------------------------------------");
+    }
+    
+    public boolean validarTipo(){ //verificando a partir da aula remota
+        return pacoteDeAula.getInfoPacote().getTipo().matches("[Rr]+|[Rr]");
+    }
+    
+    public boolean validarPerfil(){ //verificando a partir da aula individual
+        return pacoteDeAula.getInfoPacote().getPerfil().matches("[Ii]+|[Ii]");
     }
 }

@@ -9,14 +9,9 @@ package formularios;
 import java.util.Scanner;
 import turma.Aula;
 
-public class FormCadAula extends Formularios {
+public class FormCadAula implements Formularios {
     private Scanner entrada = new Scanner(System.in);
     private Aula formAula = new Aula();
-    
-    //CONSTRUTOR COM O NOME
-    public FormCadAula(String nome){
-        this.setNome(nome);
-    }
     
     //GETTER
     public Aula getFormAula(){
@@ -25,7 +20,9 @@ public class FormCadAula extends Formularios {
     
     //METÓDO HERDADO PARA EXIBIR E PREENCHER O FORMULÁRIO DA AULA
     @Override
-    public void formulario() {
+    public void formulario(String nome) {
+        System.out.println("=========="+nome+"==========");
+        
         String dia, mes, ano;
         System.out.println("(1/6) Nome para a aula:");
         formAula.setNome(entrada.nextLine());

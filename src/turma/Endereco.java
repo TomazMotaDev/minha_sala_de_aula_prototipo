@@ -9,6 +9,7 @@ public class Endereco implements ExibirDados{
     private String complemento;
     private String bairro;
     private String cidade;
+    private int id;
     
     //GETTERS AND SETTERS
     public String getRua() {
@@ -49,6 +50,14 @@ public class Endereco implements ExibirDados{
 
     public void setCidade(String cidade) {
         this.cidade = cidade;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     //METÓDO HERDADO PARA EXIBIR DADOS DO ENDEREÇO

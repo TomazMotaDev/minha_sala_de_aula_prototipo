@@ -9,6 +9,7 @@ public class InfoTurma {
     private String nome;
     private String observacaoTurma;
     private int dataPrevistaPag;
+    private int id;
     
     //GETTERS AND SETTERS
     public String getNome() {
@@ -34,6 +35,13 @@ public class InfoTurma {
     public void setDataPrevistaPag(int dataPrevistaPag) {
         this.dataPrevistaPag = dataPrevistaPag;
     }
-    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     
 }

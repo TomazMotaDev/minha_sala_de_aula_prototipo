@@ -10,16 +10,11 @@ package formularios;
 import java.util.Scanner;
 import turma.PlanejamentoDeAula;
 
-public class FormCadPlanejamento extends Formularios {
+public class FormCadPlanejamento implements Formularios {
     //ATRIBUTOS
     private Scanner entrada = new Scanner(System.in);
     private PlanejamentoDeAula formPlanejamento = new PlanejamentoDeAula();
-    
-    //CONSTRUTOR COM O NOME
-    public FormCadPlanejamento(String nome){
-        this.setNome(nome);
-    }
-    
+        
     //GETTER
     public PlanejamentoDeAula getFormPlanejamento(){
         return this.formPlanejamento;
@@ -27,7 +22,9 @@ public class FormCadPlanejamento extends Formularios {
     
     //METÓDO HERDADO PARA EXIBIR E PREENCHER O FORMULÁRIO DO PLANEJAMENTO
     @Override
-    public void formulario() {
+    public void formulario(String nome) {
+        System.out.println("=========="+nome+"==========");
+        
         System.out.println("(1/4) Objetivo - Escrevas o(s) objetivo(s) da aula:");
         formPlanejamento.setObjetivo(entrada.nextLine());
         System.out.println("(2/4) Conteúdo - Escreva o(s) conteúdo(s) da aula:");

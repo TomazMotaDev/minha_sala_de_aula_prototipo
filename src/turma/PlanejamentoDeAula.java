@@ -8,6 +8,7 @@ public class PlanejamentoDeAula implements ExibirDados{
     private String conteudo;
     private String metodologia;
     private String recursosDidaticos;
+    private int id;
 
     //GETTERS AND SETTERS
     public String getObjetivo() {
@@ -40,6 +41,14 @@ public class PlanejamentoDeAula implements ExibirDados{
 
     public void setRecursosDidaticos(String recursosDidaticos) {
         this.recursosDidaticos = recursosDidaticos;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     //METÓDO HERDADO PARA EXIBIR DADOS DO PLANEJAMENTO DE AULA

@@ -12,6 +12,7 @@ public class InfoPacote {
     private String tipo;
     private String perfil;
     private int duracaoAula;
+    private int id;
     
     //GETTER AND SETTERS
     public String getNome() {
@@ -61,5 +62,12 @@ public class InfoPacote {
     public void setDuracaoAula(int duracaoAula) {
         this.duracaoAula = duracaoAula;
     }
-    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

@@ -1,24 +1,17 @@
 package formularios;
 
 /*
-*   Classe abstrata que servirá como classe pai para os formulários.
+*   Interface que servirá como classe pai para os formulários.
 *   Aqui ficará armazenado o nome do formulário.
+*
+*   Professor,
+*   Antes estava como classe abstrata que apenas guardava o nome do formulario.
+*   Percebi então que podia simplificar colocando o nome para um paramêtro do
+*   método ao invés de ter uma classe somente para isto. Ainda consegui tirar
+*   o método de cabecalho() que não precisa mais.
 */
 
-public abstract class Formularios {
-    private String nome;
+public interface Formularios {
     
-    public String getNome(){
-        return nome;
-    }
-    
-    public void setNome(String nome){
-        this.nome = nome;
-    }
-    
-    public void cabecalho() {
-        System.out.println("=========="+this.getNome()+"==========");
-    }
-    
-    public abstract void formulario();
+    public void formulario(String nome);
 }

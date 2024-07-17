@@ -23,3 +23,15 @@ De acordo com as regras do curso técnico antes mencionado, farei todo backend e
 ## Protótipo
 
 No momento tenho um protótipo do projeto com alguns dos requisitos funcionais já funcionando e outros que devo adicionar. Ele está no formato CLI e ainda não conta com um interface para o usuário, algo que logo logo começarei a fazer para depois implementar.
+
+## Atualizações
+
+###Julho/2024
+
+- Organizando melhor as classes em pacotes específicos para cada situação.
+- Refatoração de códigos redundantes.
+- Acréscimo da Formação do Professor.
+- Criação de formulário do professor.
+- Exibição dos dados do professor com sua(s) formação(ões)
+- Modificando a classe abstrata formularios para uma interface e transformando seu único atributo em um parametro de um méotodo, simplificando um pouco mais a criação de um formulário.
+

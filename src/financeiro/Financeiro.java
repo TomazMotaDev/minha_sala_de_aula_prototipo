@@ -14,7 +14,7 @@ public class Financeiro {
     }
 
     public void addTurmas(Turma turma) {
-        this.turmas.add(turma); //AO INVÉS DE SET PREFERI ADD POR FAZER MAIS SENTIDO PARA UMA LISTA
+        this.turmas.add(turma);
     }
 
     public double getMetaFinanceira() {

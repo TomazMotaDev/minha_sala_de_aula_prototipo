@@ -10,6 +10,7 @@ public class Aula implements ExibirDados{
     private String horario;
     private String link;
     private PlanejamentoDeAula planejamento;
+    private int id;
     
     //GETTERS AND SETTERS
     public String getNome(){
@@ -50,6 +51,14 @@ public class Aula implements ExibirDados{
 
     public void setPlanejamento(PlanejamentoDeAula planejamento) {
         this.planejamento = planejamento;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     //METÓDO HERDADO PARA EXIBIR DADOS DA AULA

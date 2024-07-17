@@ -8,6 +8,7 @@ public class PacoteDeAula implements ExibirDados{
     private int duracaoPacote;
     private int recorreciaSemanal;
     private double valor;
+    private int id;
     
     //GETTERS AND SETTERS
     public InfoPacote getInfoPacote() {
@@ -40,6 +41,14 @@ public class PacoteDeAula implements ExibirDados{
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     //METÓDO HERDADO PARA EXIBIR DADOS DO PACOTE DE AULA

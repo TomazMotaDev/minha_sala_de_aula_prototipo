@@ -11,16 +11,11 @@ import java.util.Scanner;
 import turma.InfoPacote;
 import turma.PacoteDeAula;
 
-public class FormCadPacote extends Formularios{
+public class FormCadPacote implements Formularios{
     //ATRIBUTOS
     private Scanner entrada = new Scanner(System.in);
     private PacoteDeAula formPacote = new PacoteDeAula();
     private InfoPacote infoPacoteNovo = new InfoPacote();
-    
-    //CONSTRUTOR COM O NOME
-    public FormCadPacote(String nome){
-        this.setNome(nome);
-    }
     
     //GETTER
     public PacoteDeAula getFormPacote() {
@@ -29,7 +24,9 @@ public class FormCadPacote extends Formularios{
     
     //METÓDO HERDADO PARA EXIBIR E PREENCHER O FORMULÁRIO DO PACOTE DE AULA
     @Override
-    public void formulario() {        
+    public void formulario(String nome) {
+        System.out.println("=========="+nome+"==========");
+        
         System.out.println("(1/9) Nome - Defina um nome para o Pacote:");
         infoPacoteNovo.setNome(entrada.nextLine());
         

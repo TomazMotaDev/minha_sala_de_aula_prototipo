@@ -7,6 +7,7 @@ public class Aluno implements ExibirDados{
     private String nome;
     private int idade;
     private String observacao;
+    private int id;
     
     //GETTERS AND SETTERS    
     public String getNome() {
@@ -31,6 +32,14 @@ public class Aluno implements ExibirDados{
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     //METÓDO HERDADO PARA EXIBIR DADOS DO ALUNO

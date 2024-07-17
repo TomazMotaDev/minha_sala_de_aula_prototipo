@@ -31,25 +31,11 @@ public class MinhaSalaDeAulaProto {
         System.out.println("Como primeira ação, vamos cadastrar suas informações como professor(a/e)");
         
         //UM FORMULÁRIO PARA CADA ATRIBUTO DO PROFESSOR
-        System.out.println("(1/5) Insira seu nome:");
-        nome = entrada.nextLine();
-        Professor professor = new Professor(nome);
-        Apresentacao apresentacao = new Apresentacao();
+        FormCadProfessor formProf = new FormCadProfessor();        
+        formProf.formulario("PROFESSOR(A/E) CADASTRO");
         
-        System.out.println("(2/5) Escreva um pouco sobre você:");
-        apresentacao.setBio(entrada.nextLine());
-        
-        System.out.println("(3/5) Escreva um pouco sobre sua metodologia, como são suas aulas:");
-        apresentacao.setMetodologia(entrada.nextLine());      
-        professor.setApresentacao(apresentacao);
-        
-        System.out.println("(4/5) Informe seu número de contato:");
-        professor.setContato(entrada.nextLine());
-        
-        System.out.println("(5/5) Digite seu email:");
-        professor.setEmail(entrada.nextLine());
-        
-        System.out.println("\n*** Cadastro feito com sucesso ***\n");
+        Professor professor = new Professor();
+        professor = formProf.getProfForm();
         
         //Menu principal - Cadastrar | Resumos | Calendario | Financeiro
         
@@ -86,9 +72,8 @@ public class MinhaSalaDeAulaProto {
                             //1 - Pacote de Aula
                             case 1:
                                 //APRESENTANDO O FORMULÁRIO PARA CADASTRO DO PACOTE DE AULA
-                                FormCadPacote formPacote = new FormCadPacote("CADASTRO NOVO PACOTE DE AULA");
-                                formPacote.cabecalho();
-                                formPacote.formulario();
+                                FormCadPacote formPacote = new FormCadPacote();
+                                formPacote.formulario("CADASTRO NOVO PACOTE DE AULA");
                                 
                                 //ADICIONANDO O PACOTE CRIADO À LISTA DE PACOTES CADASTRADOS
                                 pacotes.add(formPacote.getFormPacote());
@@ -103,36 +88,18 @@ public class MinhaSalaDeAulaProto {
                                 CASO ESTEJA VAZIA NÃO SERÁ POSSIVEL CADASTRAR UMA TURMA*/
                                 if (pacotes.isEmpty()){
                                     System.out.println("***Favor cadastrar ao menos um Pacote de Aula***");
-                                }else {
-                                    //CRIANDO UMA NOVA TURMA
-                                    Turma turmaNova = new Turma(); 
-                                                                                                   
-                                    /*ADICIONANDO O PACOTE ESCOLHIDO NA TURMA NOVA 
-                                    O metodo irá direcionar para a escolha e retorna a escolha do pacote*/
-                                    turmaNova.setPacoteDeAula(pacotes.get(escolherPacote()-1));                                    
+                                }else {                                    
+                                    //CRIANDO O FORMULÁRIO PARA CADASTRO DE TURMA
+                                    FormCadTurma formTurma = new FormCadTurma();
                                     
-                                    //APRESENTANDO O FORMULÁRIO PARA CADASTRO DE TURMA
-                                    FormCadTurma formTurma = new FormCadTurma("CADASTRO NOVA TURMA");
+                                    //DEFININDO O PACOTE DE AULA DA TURMA NO CADASTRO
+                                    formTurma.getFormTurma().setPacoteDeAula(pacotes.get(escolherPacote()-1));
                                     
-                                    //CASO A TURMA TENHA UM PACOTE COM AULAS REMOTAS, NÃO É NECESSÁRIO CADASTRAR UM ENDEREÇO NO MOMENTO
-                                    if (!turmaNova.getPacoteDeAula().getInfoPacote().getTipo().equals("REMOTO")){
-                                        //DEFININDO COMO TRUE PARA QUE NO FORMULÁRIO APAREÇA O CADASTRO DO ENDEREÇO
-                                        formTurma.setCadEndereco(true);
-                                    }else {
-                                        //MANTENDO A VARIAVEL COMO FALSE CASO SEJAM AULAS REMOTAS
-                                        formTurma.setCadEndereco(false);
-                                    }
                                     //APRESENTANDO O CABEÇALHO E O FORMULÁRIO
-                                    formTurma.cabecalho();
-                                    formTurma.formulario();
-                                    
-                                    //ADICIONANDO OS ATRIBUTOS DA formTurma NA turmaNova
-                                    turmaNova.setInfoTurma(formTurma.getFormTurma().getInfoTurma());
-                                    turmaNova.setEndereco(formTurma.getFormTurma().getEndereco());
-                                    turmaNova.setAlunos(formTurma.getFormTurma().getAlunos());
+                                    formTurma.formulario("CADASTRO NOVA TURMA");
                                     
                                     //ADICIONANDO A TURMA CRIADA NA LISTA DE TURMAS
-                                    turmas.add(turmaNova);
+                                    turmas.add(formTurma.getFormTurma());
                                     
                                     //RESPOSTA DE SUCESSO NO CADASTRO
                                     System.out.println("\n  +++Cadastro realizado com sucesso+++\n");
@@ -147,22 +114,22 @@ public class MinhaSalaDeAulaProto {
                                 if (turmas.isEmpty()){
                                     System.out.println("  ***Favor cadastrar ao menos uma Turma***");
                                 }else {
-                                    //CRIANDO UM NOVO ALUNO(A/E)
-                                    Aluno alunoNovo = new Aluno();
+                                    int turmaEscolhida = escolherTurma()-1;
                                     
                                     //FORMULARIO PARA CADASTRO DE ALUNO(A/E)
-                                    FormCadAluno formAluno = new FormCadAluno("CADASTRO DE ALUNO(A/E)");
-                                    formAluno.cabecalho();
-                                    formAluno.formulario();
-                                    
-                                    //CRIANDO O ALUNO DE ACORDO COM O FORMULARIO
-                                    alunoNovo = formAluno.getFormAluno();
-                                    
-                                    //ADICIONANDO O ALUNO(A/E) NA TURMA
-                                    turmas.get(escolherTurma()-1).addAlunos(alunoNovo);
-                                    
-                                    //RESPOSTA DE SUCESSO NO CADASTRO
-                                    System.out.println("\n  +++Cadastro realizado com sucesso+++\n");
+                                    if (turmas.get(turmaEscolhida).validarPerfil()){ //CASO A TURMA SEJA INDIVIDUAL
+                                        System.out.println("   ***Nesta turma as aulas são individuais. Você não pode cadastrar mais alunos***");
+                                        
+                                    }else { //CASO A TURMA SEJA EM GRUPO
+                                        FormCadAluno formAluno = new FormCadAluno();
+                                        formAluno.formulario("CADASTRO DE ALUNO(A/E)");
+
+                                        //ADICIONANDO O ALUNO(A/E) NA TURMA
+                                        turmas.get(turmaEscolhida).addAlunos(formAluno.getFormAluno());
+
+                                        //RESPOSTA DE SUCESSO NO CADASTRO
+                                        System.out.println("\n  +++Cadastro realizado com sucesso+++\n");
+                                    }                                    
                                 }
                             break;
                             
@@ -173,17 +140,12 @@ public class MinhaSalaDeAulaProto {
                                 if (turmas.isEmpty()){
                                     System.out.println("  ***Favor cadastrar ao menos uma Turma***");
                                 }else {
-                                    //INSTANCIANDO UMA NOVA AULA
-                                    Aula aulaNova = new Aula();
-                                    
                                     //FORMULÁRIO PARA CRIAR A AULA
-                                    FormCadAula formAula = new FormCadAula("CADASTRO NOVA AULA");
-                                    formAula.cabecalho();
-                                    formAula.formulario();
-                                    aulaNova = formAula.getFormAula();
+                                    FormCadAula formAula = new FormCadAula();
+                                    formAula.formulario("CADASTRO NOVA AULA");
                                                                         
                                     //ADICIONANDO A AULA CRIADA NA TURMA ESCOLHIDA
-                                    turmas.get(escolherTurma()-1).addAulas(aulaNova);
+                                    turmas.get(escolherTurma()-1).addAulas(formAula.getFormAula());
                                     
                                     //RETORNANDO O SUCESSO DA CADASTRO
                                     System.out.println("\n  +++Cadastro realizado com sucesso+++\n");
@@ -197,22 +159,16 @@ public class MinhaSalaDeAulaProto {
                                 CASO ESTEJA VAZIA NÃO SERÁ POSSIVEL CADASTRAR UM PLANEJAMENTO*/
                                 if (turmas.isEmpty()){
                                     System.out.println("  ***Favor cadastrar ao menos uma Aula em uma das Turmas***");
-                                }else {
-                                    PlanejamentoDeAula planejamentoNovo = new PlanejamentoDeAula();
-                                    
+                                }else {                                    
                                     //FORMULÁRIO PARA CRIAR A AULA
-                                    FormCadPlanejamento formPlanejamento = new FormCadPlanejamento("CADASTRO NOVO PLANEJAMENTO DE AULA");
-                                    formPlanejamento.cabecalho();
-                                    formPlanejamento.formulario();
-                                    
-                                    //CRIAÇÃO DO PLANEJAMENTO
-                                    planejamentoNovo = formPlanejamento.getFormPlanejamento();
+                                    FormCadPlanejamento formPlanejamento = new FormCadPlanejamento();
+                                    formPlanejamento.formulario("CADASTRO NOVO PLANEJAMENTO DE AULA");
                                     
                                     //APRESENTANDO AS TURMAS E CRIANDO O MENU
                                     opTurma = escolherTurma();
                                     byte opAula = escolherAula(opTurma);
                                     
-                                    turmas.get(opTurma-1).getAulas().get(opAula-1).setPlanejamento(planejamentoNovo);
+                                    turmas.get(opTurma-1).getAulas().get(opAula-1).setPlanejamento(formPlanejamento.getFormPlanejamento());
                                 }
                             break;
                             
@@ -228,96 +184,110 @@ public class MinhaSalaDeAulaProto {
                     }while (opCadastro != 6);
                 break;
                 
-                //TURMAS
-                case 2:
-                    if(turmas.isEmpty()){
-                        System.out.println("   ***Favor cadastrar ao menos um pacote e em seguida uma turma***");
-                        System.out.println("   ***    Caso contrário não haverá informações para exibir    ***\n");
-                    }else{
-                        Menu menuResumos = new Menu("RESUMOS");
-                        menuResumos.addItemMenu("Pacotes de Aula");
-                        menuResumos.addItemMenu("Turmas");
-                        menuResumos.addItemMenu("Endereço");
-                        menuResumos.addItemMenu("Estudantes");
-                        menuResumos.addItemMenu("Aluno(a/e)");
-                        menuResumos.addItemMenu("Aulas");
-                        menuResumos.addItemMenu("Voltar");
-                        do {
-                            menuResumos.mostrarMenu();
-                            opResumo = entrada.nextByte();
-
-                            switch (opResumo){
-                                //1 - Pacotes de Aula
-                                case 1:
+                //RESUMOS
+                case 2:                    
+                    Menu menuResumos = new Menu("RESUMOS");
+                    menuResumos.addItemMenu("Pacotes de Aula");
+                    menuResumos.addItemMenu("Turmas");
+                    menuResumos.addItemMenu("Endereço");
+                    menuResumos.addItemMenu("Estudantes");
+                    menuResumos.addItemMenu("Aluno(a/e)");
+                    menuResumos.addItemMenu("Aulas");
+                    menuResumos.addItemMenu("Professor");
+                    menuResumos.addItemMenu("Voltar");
+                    
+                    do {
+                        menuResumos.mostrarMenu();
+                        opResumo = entrada.nextByte();
+                        switch (opResumo){
+                            //1 - Pacotes de Aula
+                            case 1:
+                                if (pacotes.isEmpty()){
+                                    System.out.println("   \n***Favor cadastrar ao menos um pacote***\n");
+                                    opResumo = 8;
+                                }else {
                                     System.out.println("    V-V-V-PACOTES CADASTRADOS-V-V-V");
                                     for (PacoteDeAula pacote: pacotes){
                                         pacote.exibirResumo();
                                     }
-                                break;
-
-                                //2 - Turmas
-                                case 2:
-                                    System.out.println("    V-V-V-TURMAS CADASTRADAS-V-V-V");
+                                }
+                                
+                            break;
+                            //2 - Turmas
+                            case 2:
+                                if(turmas.isEmpty()){
+                                    System.out.println("   \n***Favor cadastrar ao menos uma turma***\n");
+                                    opResumo = 8;
+                                }else{
+                                  System.out.println("    V-V-V-TURMAS CADASTRADAS-V-V-V");
                                     for (Turma turma: turmas){
                                         turma.exibirResumo();
-                                    }
-                                break;
-
-                                //3 - Endereço de uma Turma
-                                case 3:
+                                    }  
+                                }
+                                
+                            break;
+                            //3 - Endereço de uma Turma
+                            case 3:
+                                if(turmas.isEmpty()){
+                                    //CASO NÃO TENHA TURMAS CASDASTRADAS
+                                    System.out.println("   ***Favor cadastrar ao menos turma com aulas presencial***\n");
+                                    opResumo = 8; 
+                                }else{
                                     opTurma = escolherTurma();
-                                    if(turmas.get(opTurma-1).getEndereco() == null){
-                                        System.out.println("   ***Não há endereço cadastrado para esta Turma***");
+                                    if(turmas.get(opTurma-1).validarTipo()){
+                                        System.out.println("   ***Aulas remotas. Não há endereço cadastrado para esta Turma***");
                                     }else{
                                         System.out.println("    V-V-V-ENDEREÇO CADASTRADO-V-V-V");
                                         turmas.get(opTurma-1).getEndereco().exibirResumo();
                                     }
-
-                                break;
-
-                                //4 - Estudantes de uma Turma
-                                case 4:
+                                }
+                                
+                            break;
+                            //4 - Estudantes de uma Turma
+                            case 4:
+                                System.out.println("  ====ESTUDANTES====");
+                                for(Aluno aluno: turmas.get(escolherTurma()-1).getAlunos()){
+                                    aluno.exibirResumo();
+                                }
+                                
+                            break;
+                            //5 - Buscar dados de um aluno específicamente
+                            case 5:
+                                if(turmas.isEmpty()){
+                                    //CASO NÃO TENHA TURMAS CADASTRADAS
+                                    System.out.println("   ***Favor cadastrar uma turma e estudantes primeiro***\n");
+                                    opResumo = 8; 
+                                }else{
+                                    //ESCOLHENDO A TURMA
                                     opTurma = escolherTurma();
-                                    if(turmas.get(opTurma-1).getAlunos() == null){
-                                        System.out.println("   ***Não há estudantes cadastradas nesta Turma***");
-                                    }else{
-                                        System.out.println("  ====ESTUDANTES====");
-                                        for(Aluno aluno: turmas.get(opTurma-1).getAlunos()){
-                                            aluno.exibirResumo();
-                                        }
-                                    }
 
-                                break;
-
-                                //5 - Buscar dados de um aluno específicamente
-                                case 5:
-                                    
-                                    opTurma = escolherTurma();
-                                    if(turmas.get(opTurma-1).getAlunos().isEmpty()){
-                                        System.out.println("   ***Não há estudantes cadastradas nesta Turma***");
-                                    }else{
-                                        byte opAluno = escolherAluno(opTurma);
-                                        System.out.println("\n  VVV DADOS DO ESTUDANTE VVV");
-                                        turmas.get(opTurma-1).getAlunos().get(opAluno-1).exibirResumo();
-                                    }
-                                    
-                                break;
-
-                                //6 - Aulas de uma turma
-                                case 6:                                    
-                                    opTurma = escolherTurma();
+                                    //ESCOLHENDO O ESTUDANTE
+                                    byte opAluno = escolherAluno(opTurma);
+                                    System.out.println("\n  VVV DADOS DO ESTUDANTE VVV");
+                                    turmas.get(opTurma-1).getAlunos().get(opAluno-1).exibirResumo();
+                                }                                
+                                
+                            break;
+                            //6 - Aulas de uma turma
+                            case 6:   
+                                if(turmas.isEmpty()){
+                                    //CASO NÃO TENHA TURMAS CADASTRADAS
+                                    System.out.println("   ***Favor cadastrar uma turma e estudantes primeiro***\n");
+                                    opResumo = 8;
+                                }else{
+                                   opTurma = escolherTurma();
                                     if(turmas.get(opTurma-1).getAulas().isEmpty()){
+                                        //CASO NÃO TENHA AULAS CADASTRADAS
                                         System.out.println("   ***Não há aulas cadastradas nesta Turma***");
                                     }else{
                                         Menu menuAula = new Menu("ESCOLHA A AULA");
                                         for (Aula aula: turmas.get(opTurma-1).getAulas()){
                                             menuAula.addItemMenu(aula.getNome());
                                         }
-                                    
+
                                         //MOSTRANDO O MENU E DEFININDO A ESCOLHA DA AULA
                                         menuAula.mostrarMenu();
                                         Byte opAula = entrada.nextByte();
-
                                         //VERIFICANDO A ESCOLHA PARA QUE SEJA DENTRE AS OPÇÕES DADAS
                                         while (opAula < 0 || opAula > turmas.get(opTurma-1).getAulas().size()) {
                                             System.out.println(" ^^^Favor escolher dentre uma das opções acima (números)^^^");
@@ -325,21 +295,22 @@ public class MinhaSalaDeAulaProto {
                                         }
                                         System.out.println("\n  VVV DADOS DA AULA VVV");
                                         turmas.get(opTurma-1).getAulas().get(opAula-1).exibirResumo();
-                                    }
-
-                                break;
-
-                                //7 - Voltar
-                                case 7:
-                                    System.out.println("\n  ---Voltando para o Menu Principal---\n");
-                                break;
-
-                                default:
-                                    System.out.println("\n   ***Favor escolher um dos números para as informações que deseja visualizar***\n");
-                            }
-                        }while(opResumo != 7);
-                    }
-                
+                                    } 
+                                }
+                                
+                            break;
+                            
+                            case 7:
+                                professor.exibirResumo();
+                            break;
+                            //8 - Voltar
+                            case 8:
+                                System.out.println("\n  ---Voltando para o Menu Principal---\n");
+                            break;
+                            default:
+                                System.out.println("\n   ***Favor escolher um dos números para as informações que deseja visualizar***\n");
+                        }
+                    }while(opResumo != 8);
                     
                 break;
                 
